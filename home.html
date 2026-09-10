@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#130b17">
+<title>Yalla Hob — Pack 2</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 10%, #54213f 0, transparent 35%),
+    radial-gradient(circle at 90% 80%, #3b173e 0, transparent 35%),
+    linear-gradient(145deg, #100914, #1c0d1d 55%, #100914);
+  overflow-x: hidden;
+}
+
+.app {
+  max-width: 720px;
+  margin: auto;
+  padding: 24px 16px 40px;
+}
+
+header {
+  text-align: center;
+  padding: 18px 0 20px;
+}
+
+.heart {
+  font-size: 42px;
+  filter: drop-shadow(0 0 18px #ff5c9d);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+h1 {
+  margin: 5px 0;
+  font-size: 30px;
+}
+
+.subtitle {
+  color: #d8bfd3;
+  margin: 0;
+}
+
+.pack {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 7px 13px;
+  border: 1px solid #704260;
+  border-radius: 999px;
+  color: #ffb8d5;
+  font-size: 13px;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+  animation: fade .3s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.category {
+  border: 1px solid #58324e;
+  background: rgba(255,255,255,.055);
+  color: #fff;
+  border-radius: 20px;
+  padding: 20px 14px;
+  min-height: 112px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(0,0,0,.18);
+  transition: .2s;
+  cursor: pointer;
+}
+
+.category:hover,
+.category:active {
+  transform: translateY(-2px);
+  background: rgba(255,92,157,.13);
+  border-color: #b15a85;
+}
+
+.category small {
+  display: block;
+  color: #bda5b9;
+  margin-top: 7px;
+  font-weight: 400;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 10px;
+}
+
+button {
+  font: inherit;
+}
+
+.btn {
+  border: 1px solid #633a57;
+  background: #251329;
+  color: #fff;
+  border-radius: 13px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #e34f91, #8e3f9e);
+  border: 0;
+  box-shadow: 0 8px 25px rgba(210,65,130,.25);
+}
+
+.title {
+  text-align: center;
+  flex: 1;
+}
+
+.title h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.count {
+  color: #bda5b9;
+  font-size: 13px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 9px;
+  margin: 18px 0;
+}
+
+.card {
+  aspect-ratio: 1 / 1.18;
+  border: 1px solid #643d5b;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #2b142d, #170d1d);
+  color: #ffb5d2;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,.2);
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #ca6d9c;
+}
+
+.card.used {
+  opacity: .35;
+  cursor: default;
+  transform: none;
+}
+
+.random {
+  text-align: center;
+  margin: 8px 0 20px;
+}
+
+.question-box {
+  min-height: 330px;
+  border: 1px solid #70405f;
+  border-radius: 28px;
+  padding: 28px 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,.09),
+    rgba(255,255,255,.035)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.question-box:before {
+  content: "❤";
+  position: absolute;
+  font-size: 170px;
+  opacity: .035;
+  left: -20px;
+  bottom: -50px;
+}
+
+.q-label {
+  color: #ff9fc3;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.question {
+  font-size: 25px;
+  line-height: 1.7;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.turn {
+  margin-top: 20px;
+  color: #d8bfd3;
+  font-size: 14px;
+}
+
+.turn strong {
+  color: #ffb5d2;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.hint {
+  text-align: center;
+  color: #9f8799;
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 430px) {
+  .app {
+    padding: 15px 12px 30px;
+  }
+
+  .grid {
+    gap: 9px;
+  }
+
+  .category {
+    padding: 16px 9px;
+    min-height: 102px;
+  }
+
+  .cards {
+    gap: 7px;
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+
+  .question {
+    font-size: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="heart">♥</div>
+  <h1>Yalla Mahdouch</h1>
+  <p class="subtitle">أسئلة تقرّبكم لبعضكم أكثر</p>
+  <span class="pack">
+    PACK 2 — الأسئلة الصعيبة والـ DEEP
+  </span>
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="screen active">
+
+  <div class="topbar">
+
+    <div>
+      <h2 style="margin:0">
+        اختارو Category
+      </h2>
+
+      <div class="count">
+        14 categories · 140 questions
+      </div>
+    </div>
+
+    <button class="btn" onclick="randomCategory()">
+      🎲 Random
+    </button>
+
+  </div>
+
+  <div id="categoryGrid" class="grid"></div>
+
+</section>
+
+
+<!-- NUMBERS -->
+<section id="numbers" class="screen">
+
+  <div class="topbar">
+
+    <button class="btn" onclick="show('home')">
+      ← رجوع
+    </button>
+
+    <div class="title">
+      <h2 id="categoryTitle"></h2>
+      <div class="count">
+        اختار رقم
+      </div>
+    </div>
+
+    <button class="btn" onclick="randomQuestion()">
+      🎲
+    </button>
+
+  </div>
+
+  <div id="cards" class="cards"></div>
+
+  <div class="random">
+    <button
+      class="btn primary"
+      onclick="randomQuestion()"
+    >
+      🎲 سؤال عشوائي
+    </button>
+  </div>
+
+</section>
+
+
+<!-- QUESTION -->
+<section id="questionScreen" class="screen">
+
+  <div class="topbar">
+
+    <button
+      class="btn"
+      onclick="show('numbers')"
+    >
+      ← الأسئلة
+    </button>
+
+    <div class="title">
+
+      <h2 id="questionCategory"></h2>
+
+      <div
+        class="count"
+        id="questionNumber"
+      ></div>
+
+    </div>
+
+    <button
+      class="btn"
+      onclick="toggleTurn()"
+    >
+      👤
+    </button>
+
+  </div>
+
+
+  <div class="question-box">
+
+    <div class="q-label">
+      السؤال
+    </div>
+
+    <div
+      id="questionText"
+      class="question"
+    ></div>
+
+    <div class="turn">
+      الدور:
+      <strong id="turnName">
+        Nour
+      </strong>
+    </div>
+
+  </div>
+
+
+  <div class="actions">
+
+    <button
+      class="btn"
+      onclick="nextQuestion()"
+    >
+      ⏭ السؤال التالي
+    </button>
+
+    <button
+      class="btn primary"
+      onclick="randomQuestion()"
+    >
+      🎲 سؤال عشوائي
+    </button>
+
+  </div>
+
+  <div class="hint">
+    جاوبو بصراحة ❤️ والـ Pass مسموح في أي وقت.
+  </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+const data = {
+
+/* =====================================================
+   1 — JEALOUSY & TRUST
+===================================================== */
+
+"😈 الغيرة والثقة": [
+
+  "شنوّة أكثر حاجة تنجم تخلّيك تغار عليا؟",
+
+  "هل تعتبر روحك شخص غيور؟ وقدّاش من 10؟",
+
+  "شنوّة بالنسبة ليك الغيرة العادية وشنوّة الغيرة المَرَضية؟",
+
+  "كان شخص آخر flirt معايا قدامك، كيفاش تتصرف؟",
+
+  "فمّا حاجة نعملها تنجم تخلّيك تشك فيا؟",
+
+  "هل تنجم تثق في شريكك 100%؟",
+
+  "هل لازم الشريك يعرف password متاع تلفونو؟",
+
+  "هل تعتبر تفتيش تلفون الشريك خيانة للخصوصية؟",
+
+  "كان حسّيت اللي ثقتك فيا نقصت، تحكيلي ولا تسكت؟",
+
+  "شنوّة أسوأ حاجة ممكن تعملها باش تكسّر ثقتي فيك؟"
+
+],
+
+
+/* =====================================================
+   2 — CHEATING & RED FLAGS
+===================================================== */
+
+"💔 الخيانة والـ Red Flags": [
+
+  "بالنسبة ليك، شنوّة تعتبر خيانة؟",
+
+  "هل الـflirting خيانة؟",
+
+  "هل تخبّي messages من شريكك تعتبر خيانة؟",
+
+  "هل تنجم تسامح خيانة مرة؟",
+
+  "كان الشخص ندم بالحق، هل تعطيه فرصة ثانية؟",
+
+  "شنوّة الحاجة اللي إذا اكتشفتها في شريكك تنهي العلاقة فورًا؟",
+
+  "شنوّة أكبر red flag في شخص؟",
+
+  "شنوّة red flag في روحك تعرف اللي عندك؟",
+
+  "هل الحب ينجم يخليك تتغاضى على red flags؟",
+
+  "هل فما حاجة تعتبرها ما تتسامحش فيها مهما كان الحب؟"
+
+],
+
+
+/* =====================================================
+   3 — PAST & EX
+===================================================== */
+
+"👀 الماضي والعلاقات السابقة": [
+
+  "هل الماضي متاع الشخص مهم بالنسبة ليك؟",
+
+  "تحب تعرف تفاصيل العلاقات السابقة متاع شريكك؟",
+
+  "هل تقارن روحك بالـex متاع شريكك؟",
+
+  "كان تعرف اللي الشخص اللي تحبو كان يحب شخص آخر برشة قبل، يضايقك؟",
+
+  "هل تنجم تبقى على علاقة بصاحب/ة قديم/ة؟",
+
+  "كان الـex رجع يحاول يدخل حياتك، كيفاش تتصرف؟",
+
+  "هل فما شخص من الماضي مازلت تتذكره؟",
+
+  "شنوّة أكبر درس تعلمتو من علاقة أو إعجاب سابق؟",
+
+  "هل الماضي ينجم يأثر على علاقتك الحالية؟",
+
+  "فمّا حاجة من ماضيك تخاف نهار نعرفها نبدل رأيي فيك؟"
+
+],
+
+
+/* =====================================================
+   4 — SECRETS
+===================================================== */
+
+"🫣 أسرار واعترافات": [
+
+  "فمّا حاجة عمرك ما قلتها ليا؟",
+
+  "شنوّة أكثر حاجة تخاف نحكم عليك بسببها؟",
+
+  "شنوّة أكبر insecurity عندك وما تحكيش عليها؟",
+
+  "فمّا حاجة تعملها وحدك وما يعرفها حتى حد؟ 😂",
+
+  "شنوّة أكثر موقف محرج مازلت تتفكروا؟",
+
+  "شنوّة أكبر lie قلتها في حياتك؟",
+
+  "هل عمرك عملت روحك قوي وإنت من داخل مكسور؟",
+
+  "شنوّة أكثر حاجة تخبيها كي تكون متقلق؟",
+
+  "شنوّة سؤال تتمنى عمري ما نسألك عليه؟",
+
+  "كان لازم تقوللي حقيقة واحدة ما قلتهاش قبل، شنوّة تكون؟"
+
+],
+
+
+/* =====================================================
+   5 — WEAKNESSES
+===================================================== */
+
+"🧠 نقاط الضعف": [
+
+  "شنوّة أكثر حاجة تجرحك من الشخص اللي تحبو؟",
+
+  "شنوّة كلمة تنجم تكسرك حتى كان قلتها في لحظة غضب؟",
+
+  "وقت تتخاصم، تميل للهروب ولا المواجهة؟",
+
+  "هل تعتذر بسهولة؟",
+
+  "شنوّة أصعب حاجة عليك: تقول غلطت ولا سامحني؟",
+
+  "كي تكون زعلان مني، شنوّة تتمنى نعمل؟",
+
+  "هل تنجم تحكي على مشاعرك بسهولة؟",
+
+  "شنوّة الحاجة اللي تخليك تحس إنك موش كافي؟",
+
+  "شنوّة أكثر حاجة تحتاجها من شريكك وقت تكون في أسوأ حالاتك؟",
+
+  "شنوّة الجرح اللي تخاف تعاود تعيشو في علاقة؟"
+
+],
+
+
+/* =====================================================
+   6 — CONFLICT
+===================================================== */
+
+"🫂 المشاكل والخلافات": [
+
+  "شنوّة أكثر حاجة فيا تنجم تستفزك؟",
+
+  "شنوّة أكثر حاجة نعملها وقت نتخاصمو وما تعجبكش؟",
+
+  "كان اختلفنا، شكون في رأيك لازم يبدأ الصلح؟",
+
+  "هل تفضّل تحل المشكلة في وقتها ولا تاخذ وقتك؟",
+
+  "هل تنجم تنام وإنت زعلان من الشخص اللي تحبو؟",
+
+  "شنوّة بالنسبة ليك خط أحمر وقت الـarguments؟",
+
+  "هل ترفع صوتك وقت تغضب؟",
+
+  "هل تنجم تقول كلام جارح وقت تكون معصّب وبعد تندم؟",
+
+  "شنوّة الحاجة اللي تحبني نفهمها عليك وقت تكون غضبان؟",
+
+  "كان صارت بيناتنا مشكلة كبيرة، شنوّة الشيء اللي يخليك تتمسك بالعلاقة وما تستسلمش؟"
+
+],
+
+
+/* =====================================================
+   7 — MONEY & WORK
+===================================================== */
+
+"💰 الفلوس والخدمة": [
+
+  "شنوّة مكانة الفلوس في حياتك؟",
+
+  "هل تحب شريكك يكون مستقل ماديًا؟",
+
+  "كيفاش تتصور تقسيم المصاريف بين الزوجين؟",
+
+  "هل الفلوس تنجم تكون سبب كافي لإنهاء علاقة؟",
+
+  "هل تحب تعرف salaire متاع شريكك؟",
+
+  "كان واحد في العلاقة يكسب أكثر من الآخر، يهمك؟",
+
+  "هل تقبل إن شريكك يخدم خدمة تتطلب سفر برشة؟",
+
+  "شنوّة أهم: carrière قوية ولا حياة عائلية مستقرة؟",
+
+  "كان شريكك فقد خدمتو، كيفاش تتصرف؟",
+
+  "شنوّة أكبر sacrifice مستعد تعملو باش تبني future قوي؟"
+
+],
+
+
+/* =====================================================
+   8 — FAMILY
+===================================================== */
+
+"👨‍👩‍👧 العايلة والتدخل": [
+
+  "قدّاش رأي عايلتك يأثر في قراراتك؟",
+
+  "كان عايلتك ما حبتش الشخص اللي تحبو، شنوّة تعمل؟",
+
+  "شكون يجي الأول في قرارات الزواج: الزوجين ولا العايلة؟",
+
+  "هل تقبل عايلتك تتدخل في مشاكل العلاقة؟",
+
+  "شنوّة الحدود اللي لازم تكون بين الزوجين والعايلة؟",
+
+  "كان صار conflict بين شريكك وعايلتك، مع شكون توقف؟",
+
+  "هل تنجم تقول لا لعايلتك على خاطر شريكك؟",
+
+  "شنوّة أكثر حاجة تخاف منها في علاقة شريكك بعايلتك؟",
+
+  "تحب تعيش قريب من العايلة ولا بعيد؟",
+
+  "شنوّة الحاجة اللي مستحيل تسمح لحتى حد يتدخل فيها بينك وبين شريكك؟"
+
+],
+
+
+/* =====================================================
+   9 — RELIGION
+===================================================== */
+
+"🕌 الدين والزواج": [
+
+  "قدّاش الدين يأثر على اختيار شريك حياتك؟",
+
+  "شنوّة الأمور الدينية اللي تعتبرها non-negotiable في الزواج؟",
+
+  "كان اختلفنا في مسألة دينية، كيفاش تحب نحلّوها؟",
+
+  "هل تحب شريكك يشجعك باش تقرّب أكثر لربي؟",
+
+  "هل تعتبر الدين مسؤولية مشتركة بين الزوجين؟",
+
+  "كيفاش تحب تكون تربية صغارنا دينيًا؟",
+
+  "شنوّة الحدود اللي تعتبرها مهمة في العلاقة قبل الزواج؟",
+
+  "كان العايلة ضغطت عليك في قرار ديني يخص علاقتنا، شنوّة تعمل؟",
+
+  "هل تنجم تعيش مع شريك عندو طريقة مختلفة في ممارسة الدين؟",
+
+  "بالنسبة ليك، كيفاش تكون الزوجة/الزوج الصالح؟"
+
+],
+
+
+/* =====================================================
+   10 — MARRIAGE
+===================================================== */
+
+"💍 الزواج والحياة مع بعض": [
+
+  "علاش تحب تتزوج أصلًا؟",
+
+  "شنوّة معنى الزواج بالنسبة ليك؟",
+
+  "شنوّة أكثر حاجة تخوفك في الزواج؟",
+
+  "شنوّة تتوقع من شريك حياتك بعد الزواج؟",
+
+  "شنوّة أكثر حاجة لازم تبقى موجودة بعد سنين من الزواج؟",
+
+  "هل الحب ينجم يتبدل بعد الزواج؟",
+
+  "كيفاش تتصور تقسيم المسؤوليات في الدار؟",
+
+  "هل تحب الزوجين يعملو كل شيء مع بعضهم ولا كل واحد عندو مساحتو؟",
+
+  "شنوّة الحاجة اللي إذا فقدتها في الزواج تحس العلاقة ولات فارغة؟",
+
+  "شنوّة نوع الزوج/الزوجة اللي تحب تكون؟"
+
+],
+
+
+/* =====================================================
+   11 — CHILDREN
+===================================================== */
+
+"👶 الأطفال والتربية": [
+
+  "تحب يكون عندك صغار؟",
+
+  "قدّاش تتمنى يكون عندك؟",
+
+  "شنوّة أهم قيمة تحب تربي عليها صغارك؟",
+
+  "هل تكون strict مع صغارك ولا flexible؟",
+
+  "شنوّة حاجة من تربيتك تحب تعاودها مع صغارك؟",
+
+  "وشنوّة حاجة مستحيل تعاودها؟",
+
+  "كان أنا وإنت اختلفنا في طريقة تربية صغارنا، كيفاش نحلّوها؟",
+
+  "هل تحب صغارك يكبرو في تونس ولا في بلاد أخرى؟",
+
+  "شنوّة أهم: الدراسة، الأخلاق، الدين، الاستقلالية، ولا حاجة أخرى؟",
+
+  "شنوّة الحاجة اللي تتمنى ولدك/بنتك يقولها عليك كي يكبر؟"
+
+],
+
+
+/* =====================================================
+   12 — LONG DISTANCE
+===================================================== */
+
+"📞 Long Distance": [
+
+  "هل عمرك حسّيت إنو البعد خلاك تشك في علاقتنا؟",
+
+  "شنوّة أكثر وقت تحس فيه بالوحدة من غيري؟",
+
+  "فمّا حاجة تعملها وقت توحشني وما تحكيليش عليها؟",
+
+  "هل تحس إننا نعطيو نفس المجهود للعلاقة؟",
+
+  "شنوّة الحاجة اللي تخاف تصير بسبب المسافة؟",
+
+  "كان مرّة حسّيت إن مشاعرك نقصت، تحكيلي؟",
+
+  "هل تخاف إن واحد فينا يتبدل مع الوقت؟",
+
+  "شنوّة أكثر حاجة تحتاجها مني باش تحس بالأمان وإحنا بعاد؟",
+
+  "كان جات فترة ما نجمناش نحكيو برشة، كيفاش تحب نتعاملوا معاها؟",
+
+  "هل تشوف إن علاقتنا تنجم تنجح رغم المسافة؟ وعلاش؟"
+
+],
+
+
+/* =====================================================
+   13 — ROMANTIC
+===================================================== */
+
+"🔥 Romantic": [
+
+  "شنوّة أكثر حاجة فيا تجذبك؟",
+
+  "شنوّة أكثر حاجة نعملها وتعملك butterflies؟",
+
+  "شنوّة أكثر moment حسّيت فيه إنك قريب مني برشة؟",
+
+  "شنوّة نوع affection اللي تحبو أكثر؟",
+
+  "كان نكون قدامك توّة، شنوّة أول حاجة تحب تعملها؟",
+
+  "شنوّة أكثر date تحلم تعملها معايا؟",
+
+  "شنوّة حاجة رومانسية تحب نجربوها مع بعضنا؟",
+
+  "شنوّة أكثر compliment مني تحب تسمعو؟",
+
+  "شنوّة الحاجة اللي تخليك تحس روحك desired ومحبوب؟",
+
+  "شنوّة أكثر حاجة تحبها في الطريقة اللي نحبك بيها؟ ❤️"
+
+],
+
+
+/* =====================================================
+   14 — KILLER QUESTIONS
+===================================================== */
+
+"🥶 السؤال القاتل": [
+
+  "شنوّة أكثر حاجة تخاف تخسرها في علاقتنا؟",
+
+  "شنوّة الحاجة اللي مازلت موش متأكد منها فينا؟",
+
+  "شنوّة الحاجة اللي تتمنى نبدلها في روحي؟",
+
+  "شنوّة الحاجة اللي تخاف نهار نكتشفها عليك؟",
+
+  "هل تحس إنك تعطي في العلاقة قد ما تاخو منها؟",
+
+  "شنوّة الحاجة اللي إذا ما تبدلتش، تنجم تفسد علاقتنا؟",
+
+  "كان لازم تختار بين الحب والاستقرار، شنوّة تختار؟",
+
+  "شنوّة أكثر حاجة تتمنى تسمعها مني وما قلتهاش لحد الآن؟",
+
+  "شنوّة السؤال اللي كنت تتمنى أنا نسألهولك وما سألتكش؟",
+
+  "بعد كل شيء عرفتو عليا، شنوّة أكثر حاجة تخليك مازلت تختارني؟ ❤️"
+
+]
+
+};
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let currentCategory = "";
+let currentIndex = 0;
+let turn = 0;
+
+const players = [
+  "Nour",
+  "Mehdi"
+];
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+
+/* =====================================================
+   SCREEN NAVIGATION
+===================================================== */
+
+function show(id) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
+      screen.classList.remove("active");
+    });
+
+  $(id).classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =====================================================
+   RENDER CATEGORIES
+===================================================== */
+
+function renderCategories() {
+
+  $("categoryGrid").innerHTML = "";
+
+  Object.entries(data).forEach(([name, questions]) => {
+
+    const button = document.createElement("button");
+
+    button.className = "category";
+
+    button.innerHTML = `
+      ${name}
+      <small>
+        ${questions.length} أسئلة
+      </small>
+    `;
+
+    button.onclick = () => {
+      openCategory(name);
+    };
+
+    $("categoryGrid").appendChild(button);
+
+  });
+}
+
+
+/* =====================================================
+   OPEN CATEGORY
+===================================================== */
+
+function openCategory(name) {
+
+  currentCategory = name;
+
+  $("categoryTitle").textContent = name;
+
+  const cards = $("cards");
+
+  cards.innerHTML = "";
+
+  data[name].forEach((_, index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "card";
+
+    button.textContent = index + 1;
+
+    button.onclick = () => {
+      openQuestion(index, button);
+    };
+
+    cards.appendChild(button);
+
+  });
+
+  show("numbers");
+}
+
+
+/* =====================================================
+   OPEN QUESTION
+===================================================== */
+
+function openQuestion(index, button) {
+
+  currentIndex = index;
+
+  if (button) {
+    button.classList.add("used");
+  }
+
+  $("questionCategory").textContent =
+    currentCategory;
+
+  $("questionNumber").textContent =
+    `السؤال ${index + 1} / ${data[currentCategory].length}`;
+
+  $("questionText").textContent =
+    data[currentCategory][index];
+
+  $("turnName").textContent =
+    players[turn];
+
+  show("questionScreen");
+}
+
+
+/* =====================================================
+   CHANGE TURN
+===================================================== */
+
+function toggleTurn() {
+
+  turn = turn ? 0 : 1;
+
+  $("turnName").textContent =
+    players[turn];
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
+
+function nextQuestion() {
+
+  turn = turn ? 0 : 1;
+
+  let next =
+    (currentIndex + 1) %
+    data[currentCategory].length;
+
+  currentIndex = next;
+
+  $("questionNumber").textContent =
+    `السؤال ${next + 1} / ${data[currentCategory].length}`;
+
+  $("questionText").textContent =
+    data[currentCategory][next];
+
+  $("turnName").textContent =
+    players[turn];
+}
+
+
+/* =====================================================
+   RANDOM QUESTION
+===================================================== */
+
+function randomQuestion() {
+
+  const categories =
+    Object.keys(data);
+
+  if (!currentCategory) {
+
+    currentCategory =
+      categories[
+        Math.floor(
+          Math.random() * categories.length
+        )
+      ];
+
+  }
+
+  const index =
+    Math.floor(
+      Math.random() *
+      data[currentCategory].length
+    );
+
+
+  if (!$("numbers").classList.contains("active")) {
+
+    $("questionCategory").textContent =
+      currentCategory;
+
+    $("questionNumber").textContent =
+      `السؤال ${index + 1} / ${data[currentCategory].length}`;
+
+    $("questionText").textContent =
+      data[currentCategory][index];
+
+    $("turnName").textContent =
+      players[turn];
+
+    currentIndex = index;
+
+    show("questionScreen");
+
+  } else {
+
+    openQuestion(index);
+
+  }
+}
+
+
+/* =====================================================
+   RANDOM CATEGORY
+===================================================== */
+
+function randomCategory() {
+
+  const categories =
+    Object.keys(data);
+
+  const random =
+    categories[
+      Math.floor(
+        Math.random() * categories.length
+      )
+    ];
+
+  openCategory(random);
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderCategories();
+
+</script>
+
+</body>
+</html>
